@@ -6,31 +6,31 @@ var mac = /Mac/,
     lin = /Lin/,
     lin64 = /x86_64/;
 
-if(mac.test(userAgent)) {
-	document.getElementsByTagName('body')[0].className+=' mac';
-} else if (win.test(userAgent)) {
-	document.getElementsByTagName('body')[0].className+=' win';
-} else if (lin.test(userAgent)) {
-  if(lin64.test(userAgent)) {
-    document.getElementsByTagName('body')[0].className+=' lin-64';
-  } else {
-    document.getElementsByTagName('body')[0].className+=' lin-32';
-  }
-} else {
-	document.getElementsByTagName('body')[0].className+=' nope';
+function setType(t) {
+    document.getElementsByTagName('body')[0].className += ' ' + t;
 }
+
+if (mac.test(userAgent))
+    setType('mac');
+else if (win.test(userAgent))
+    setType('win');
+else if (lin.test(userAgent) && lin64.test(userAgent))
+    setType('lin-64');
+else if (lin.test(userAgent))
+    setType('lin-32');
+else 
+    setType('nope');
+
 
 var heroHeight = document.getElementById('header').offsetHeight;
 
 // Disable WOW on small screens.
 try {
-  if(window.innerWidth > 768) {
-    wow = new WOW(
-      {
-        animateClass: 'animated',
-        offset:       100
-      }
-    );
-    wow.init();
-  };
-} catch(err) {  }
+    if (window.innerWidth > 768) {
+        wow = new WOW({
+            animateClass: 'animated',
+            offset: 100
+        });
+        wow.init();
+    };
+} catch (err) {}
